@@ -114,26 +114,25 @@ public class GBLesson3 {
         boolean[] guessedPositions = new boolean[guessedWord.length()];
         char letter;
         String userInput;
-        System.out.println("Вам загадано слово. Вводя буквы по одной попробуйте угадать его, или введите exit чтобы закончить");
+        System.out.println("Вам загадано слово. Попробуйте угадать его, или введите 0 чтобы закончить");
 
         do {
             printGuessedWordWithMask(guessedWord, guessedPositions);
-            System.out.println("Введите букву:");
+            System.out.println("Введите слово:");
             userInput = scanner.next();
 
-            if (userInput.equals("exit")) {
+            if (userInput.equals("0")) {
                 System.out.println("Выход!");
                 break;
             }
 
-            if (userInput.length() != 1) {
-                continue;
+            if (userInput.equals(guessedWord)){
+                System.out.println("Поздравляем! Вы угадали слово!");
+                break;
             }
 
-            if ( checkWordContainsLetter(guessedWord, userInput.charAt(0), guessedPositions) ){
-                System.out.printf("Вы угадали букву %s\n\n", userInput );
-            } else {
-                System.out.println("Такой буквы в слове нет!");
+            if ( checkWordContainsLetters(guessedWord, userInput, guessedPositions) ){
+                System.out.println("Вы угадали позицию одной или нескольких букв!" );
             }
 
         } while (!isAllLettersGuessed(guessedPositions));
@@ -172,16 +171,17 @@ public class GBLesson3 {
     }
 
     /**
-     * Проверяет, есть ли выбранная пользователем буква в загаданном слове
-     * Проставляет true в массив в тех местах, где буква есть
-     * возвращает true в случае, если буква угадана, false - в другом случае
+     * Проверяет, есть ли совпадения по буквам в выбранном слове
+     * Проставляет true в массив guessed[] в тех местах, где буква есть
+     * возвращает true в случае, если новая буква или буквы угаданы
      * */
-    public static boolean checkWordContainsLetter(String word, char letter, boolean[] guessed){
+    public static boolean checkWordContainsLetters(String guessedWord, String userGuess, boolean[] guessed){
 
         boolean contains = false;
 
-        for (int i = 0; i < word.length(); i++) {
-            if(word.charAt(i) == letter){
+        for (int i = 0; i < ( userGuess.length() <= guessedWord.length() ? userGuess.length() :  guessedWord.length() ); i++) {
+
+            if(guessedWord.charAt(i) == userGuess.charAt(i) && !guessed[i]){
                 contains = true;
                 guessed[i] = true;
             }
