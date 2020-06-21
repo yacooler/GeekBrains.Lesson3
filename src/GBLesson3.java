@@ -112,7 +112,6 @@ public class GBLesson3 {
     public static void guessTheWordGameIteration(String guessedWord){
 
         boolean[] guessedPositions = new boolean[guessedWord.length()];
-        char letter;
         String userInput;
         System.out.println("Вам загадано слово. Попробуйте угадать его, или введите 0 чтобы закончить");
 
